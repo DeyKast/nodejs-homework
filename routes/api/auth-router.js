@@ -4,6 +4,7 @@ import {
   userSignupSchema,
   userSigninSchema,
   updateSubscription,
+  userEmailSchema,
 } from "../../schemas/userSchema.js";
 import authController from "../../controllers/auth-controller.js";
 import { authenticate } from "../../middlewares/index.js";
@@ -14,6 +15,14 @@ authRouter.post(
   "/register",
   validateBody(userSignupSchema),
   authController.signup
+);
+
+authRouter.get("/verify/:verificationToken", authController.verify);
+
+authRouter.post(
+  "/verify",
+  validateBody(userEmailSchema),
+  authController.resendVerifyEmail
 );
 
 authRouter.post(
